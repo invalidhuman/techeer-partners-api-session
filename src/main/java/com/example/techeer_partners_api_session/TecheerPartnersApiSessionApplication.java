@@ -11,3 +11,5 @@ public class TecheerPartnersApiSessionApplication {
 	}
 
 }
+
+// 투두리스트 : 할일이라는 객체가 필요. -> task로 생성
