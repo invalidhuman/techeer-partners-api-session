@@ -28,5 +28,9 @@ public class TaskService {
 
     }
 
+    public void deleteTask(Long id) {
+        Task task = taskRepository.findById(id).orElse(null);
+        taskRepository.delete(task);
+    }
 
 }

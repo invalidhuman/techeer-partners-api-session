@@ -52,4 +52,13 @@ public class TaskController {
     }
 
     // 4. 할 일 삭제
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteTask (@PathVariable Long id) {
+        taskService.deleteTask(id);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("status","success");
+        response.put("message","할 일이 삭제되었습니다.");
+        return ResponseEntity.status(200).body(response);
+    }
 }
