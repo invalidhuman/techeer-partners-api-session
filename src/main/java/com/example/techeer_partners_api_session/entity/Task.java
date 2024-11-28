@@ -11,7 +11,7 @@ public class Task {
     @Column(nullable = false)
     private String title;
 
-    @Column
+    @Column(nullable = false)
     private boolean isDone = false;
 
     public Task() {
@@ -22,4 +22,10 @@ public class Task {
         this.title = title;
         this.isDone = isDone;
     }
+
+    public void update(String title, boolean isDone) {
+        this.title = title;
+        this.isDone = isDone;
+    }
+
 }

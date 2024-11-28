@@ -19,6 +19,7 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    // 1. 할 일 생성
     @PostMapping
     public ResponseEntity<Map<String, String>> createTask (@RequestBody TaskRequestDto dto) {
         taskService.createTask(dto);
@@ -30,8 +31,25 @@ public class TaskController {
     }
 
     // 2. 완료된 일 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, String>> readTask (@RequestBody TaskRequestDto dto) {
+        Map<String,String> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "완료된 할일이 조회되었습니다.");
+
+        return ResponseEntity.status(200).body(response);
+    }
 
     // 3. 할 일 수정
+    @PatchMapping("/{id}")
+    public ResponseEntity<Map<String,String>> updateTask (@PathVariable Long id, @RequestBody TaskRequestDto dto) { //URL 경로의 일부를 메서드 매개변수로 매핑
+        taskService.updateTask(id, dto);
+        Map<String, String> response = new HashMap<>();
+        response.put("status","success");
+        response.put("message","할 일이 수정되었습니다.");
+
+        return ResponseEntity.status(200).body(response);
+    }
 
     // 4. 할 일 삭제
 }
