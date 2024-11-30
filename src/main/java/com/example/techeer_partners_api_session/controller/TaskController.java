@@ -68,4 +68,30 @@ public class TaskController {
 
         return ResponseEntity.status(200).body(response);
     }
+
+    // 4. 완료된 할 일 조회
+    @GetMapping("/completed")
+    public ResponseEntity<ApiResponseDto<List<TaskResponseDto>>> getCompletedTasks() {
+        List<TaskResponseDto> tasks = taskService.getTasksByIsDone(true);
+        ApiResponseDto<List<TaskResponseDto>> response = new ApiResponseDto(
+                "success",
+                "완료된 할 일이 조회되었습니다.",
+                tasks
+        );
+
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @GetMapping("/incomplete")
+    public ResponseEntity<ApiResponseDto<List<TaskResponseDto>>> getIncompleteTasks() {
+        List<TaskResponseDto> tasks = taskService.getTasksByIsDone(false);
+        ApiResponseDto<List<TaskResponseDto>> response = new ApiResponseDto(
+                "success",
+                "미완료된 할 일이 조회되었습니다.",
+                tasks
+        );
+
+        return ResponseEntity.status(200).body(response);
+    }
+
 }

@@ -44,4 +44,14 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
+    public List<TaskResponseDto> getTasksByIsDone(Boolean isDone) {
+        List<Task> tasks;
+        if (isDone == true)
+            tasks = taskRepository.findByIsDone(true);
+        else
+            tasks = taskRepository.findByIsDone(false);
+
+        return tasks.stream().map(Task::toDto).toList();
+    }
+
 }
