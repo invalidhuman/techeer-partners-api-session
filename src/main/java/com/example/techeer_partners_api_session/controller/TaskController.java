@@ -1,12 +1,15 @@
 package com.example.techeer_partners_api_session.controller;
 
+import com.example.techeer_partners_api_session.dto.ApiResponseDto;
 import com.example.techeer_partners_api_session.dto.TaskRequestDto;
-import com.example.techeer_partners_api_session.repository.TaskRepository;
+import com.example.techeer_partners_api_session.dto.TaskResponseDto;
+import com.example.techeer_partners_api_session.entity.Task;
 import com.example.techeer_partners_api_session.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -30,17 +33,7 @@ public class TaskController {
         return ResponseEntity.status(201).body(response);
     }
 
-    // 2. 완료된 일 조회
-    @GetMapping("/{id}")
-    public ResponseEntity<Map<String, String>> readTask (@RequestBody TaskRequestDto dto) {
-        Map<String,String> response = new HashMap<>();
-        response.put("status", "success");
-        response.put("message", "완료된 할일이 조회되었습니다.");
-
-        return ResponseEntity.status(200).body(response);
-    }
-
-    // 3. 할 일 수정
+    // 2. 할 일 수정
     @PatchMapping("/{id}")
     public ResponseEntity<Map<String,String>> updateTask (@PathVariable Long id, @RequestBody TaskRequestDto dto) { //URL 경로의 일부를 메서드 매개변수로 매핑
         taskService.updateTask(id, dto);
@@ -51,7 +44,7 @@ public class TaskController {
         return ResponseEntity.status(200).body(response);
     }
 
-    // 4. 할 일 삭제
+    // 3. 할 일 삭제
     @DeleteMapping("{id}")
     public ResponseEntity deleteTask (@PathVariable Long id) {
         taskService.deleteTask(id);
@@ -59,6 +52,20 @@ public class TaskController {
         Map<String, String> response = new HashMap<>();
         response.put("status","success");
         response.put("message","할 일이 삭제되었습니다.");
+        return ResponseEntity.status(200).body(response);
+    }
+
+    // 모든 할 일 조회
+    @GetMapping
+    public ResponseEntity<ApiResponseDto<List<TaskResponseDto>>> getAllTasks () {
+        List<TaskResponseDto> tasks = taskService.getAllTasks();
+
+        ApiResponseDto<List<TaskResponseDto>> response = new ApiResponseDto(
+                "success",
+                "모든 게시글이 조회되었습니다.",
+                tasks
+        );
+
         return ResponseEntity.status(200).body(response);
     }
 }

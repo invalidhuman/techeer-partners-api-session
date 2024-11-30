@@ -1,5 +1,6 @@
 package com.example.techeer_partners_api_session.entity;
 
+import com.example.techeer_partners_api_session.dto.TaskResponseDto;
 import jakarta.persistence.*;
 
 @Entity
@@ -26,6 +27,10 @@ public class Task {
     public void update(String title, boolean isDone) {
         this.title = title;
         this.isDone = isDone;
+    }
+
+    public TaskResponseDto toDto() {
+        return new TaskResponseDto(id, title, isDone);
     }
 
 }

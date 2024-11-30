@@ -1,10 +1,14 @@
 package com.example.techeer_partners_api_session.service;
 
 import com.example.techeer_partners_api_session.dto.TaskRequestDto;
+import com.example.techeer_partners_api_session.dto.TaskResponseDto;
 import com.example.techeer_partners_api_session.entity.Task;
 import com.example.techeer_partners_api_session.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TaskService {
@@ -19,6 +23,13 @@ public class TaskService {
         //DB에 저장
         taskRepository.save(task);
 
+    }
+
+    public List<TaskResponseDto> getAllTasks() { // 전달할 dto가 없으니 매개변수도 필요없다.
+
+        List<Task> tasks = taskRepository.findAll();
+
+        return tasks.stream().map(Task::toDto).toList();
     }
 
     public void updateTask(Long id, TaskRequestDto dto) {
